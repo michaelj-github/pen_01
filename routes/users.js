@@ -11,7 +11,9 @@ const {
 //
 
 // must be admin to get all users
-router.get("/", ensureIsAdmin, async (req, res, next) => {
+// router.get("/", ensureIsAdmin, async (req, res, next) => {
+// temporary: allow anyone to get a list of users
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.getAllUsers();
     // return res.json({ users });

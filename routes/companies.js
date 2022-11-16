@@ -20,7 +20,9 @@ router.get("/", async (req, res, next) => {
 });
 
 // must be logged in
-router.get("/:ticker", ensureIsLoggedIn, async (req, res, next) => {
+// router.get("/:ticker", ensureIsLoggedIn, async (req, res, next) => {
+// temporary: allow anyone to request company by ticker
+router.get("/:ticker", async (req, res, next) => {
   try {
     let { ticker } = req.params;
     ticker = ticker.toUpperCase();
