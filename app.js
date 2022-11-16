@@ -1,3 +1,4 @@
+"use strict";
 const express = require("express");
 const ExpressError = require("./expressError");
 const db = require("./db");
@@ -7,11 +8,11 @@ app.use(express.json());
 
 //
 app.get("/", async (req, res) => {
-  console.log("PEND Home Page");
-  return res.send({ message: "PEND Home Page" });
+  console.log("PEN Home Page");
+  return res.send({ message: "PEN Home Page", version: "v0.1.1" });
 });
 //
-app.get("/users", async (req, res) => {
+app.get("/users", async (req, res, next) => {
   console.log("/users route");
   try {
     const results = await db.query(`SELECT * FROM users`);
