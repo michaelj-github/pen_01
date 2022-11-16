@@ -1,27 +1,42 @@
 "use strict";
 const express = require("express");
 const ExpressError = require("./expressError");
-const db = require("./db");
+const db = require("./db"); // won't need this once routes and models are implemented
 const app = express();
+const { authenticateJWT } = require("./middleware/auth");
 
 app.use(express.json());
+app.use(authenticateJWT);
+//
+
+// routes
+const usersRoutes = require("./routes/users");
+app.use("/users", usersRoutes);
+const companiesRoutes = require("./routes/companies");
+app.use("/companies", companiesRoutes);
+const analysesRoutes = require("./routes/analyses");
+app.use("/analyses", analysesRoutes);
+const adminRoutes = require("./routes/admin");
+app.use("/admin", adminRoutes);
+//
 
 //
 app.get("/", async (req, res) => {
   console.log("PEN Home Page");
-  return res.send({ message: "PEN Home Page", version: "v0.1.1" });
+  return res.json({ message: "PEN Home Page", version: "v0.1.1" });
 });
-//
-app.get("/users", async (req, res, next) => {
-  console.log("/users route");
-  try {
-    const results = await db.query(`SELECT * FROM users`);
-    return res.json({ users: results.rows });
-  } catch (e) {
-    console.log("error = ", e);
-    return next(e);
-  }
-});
+
+// this will be in routes/models
+// app.get("/users", async (req, res, next) => {
+//   console.log("/users route");
+//   try {
+//     const results = await db.query(`SELECT * FROM users`);
+//     return res.json({ users: results.rows });
+//   } catch (e) {
+//     console.log("error = ", e);
+//     return next(e);
+//   }
+// });
 
 //
 
