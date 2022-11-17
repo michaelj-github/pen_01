@@ -1,5 +1,6 @@
 const express = require("express");
 const router = new express.Router();
+const ExpressError = require("../expressError");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config.js");
 const User = require("../models/user");
@@ -28,6 +29,9 @@ router.post("/login", async (req, res, next) => {
   try {
     console.log("req.body = ", req.body);
     let { username, password } = req.body;
+    if (!username || !password) {
+      throw new ExpressError(`Username and password are required.`, 400);
+    }
     username = username.toLowerCase();
     const user = await User.authenticateAUser(username, password);
     const payload = {
@@ -62,6 +66,9 @@ router.get("/:username", ensureIsThisUserOrIsAdmin, async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     let { username, password, first_name, last_name, email } = req.body;
+    if (!username || !password) {
+      throw new ExpressError(`Username and password are required.`, 400);
+    }
     username = username.toLowerCase();
     const user = await User.addAUser(
       username,
