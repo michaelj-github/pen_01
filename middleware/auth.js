@@ -6,9 +6,15 @@ const ExpressError = require("../expressError");
 //
 
 function authenticateJWT(req, res, next) {
-  //   console.log("Validate Token", req.body.token, SECRET_KEY);
+  // console.log("Validate Token from body", req.body.token, SECRET_KEY);
+  // console.log(
+  //   "Validate Token from header",
+  //   req.headers.authorization,
+  //   SECRET_KEY
+  // );
   try {
-    req.user = jwt.verify(req.body.token, SECRET_KEY);
+    // req.user = jwt.verify(req.body.token, SECRET_KEY);
+    req.user = jwt.verify(req.headers.authorization, SECRET_KEY);
     // console.log("Valid Token, req.user = ", req.user);
     return next();
   } catch (e) {

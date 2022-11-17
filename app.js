@@ -22,7 +22,7 @@ app.use("/admin", adminRoutes);
 
 //
 app.get("/", async (req, res) => {
-  console.log("PEN Home Page");
+  console.log("PEN Home Page v0.1.1");
   return res.json({ message: "PEN Home Page", version: "v0.1.1" });
 });
 
