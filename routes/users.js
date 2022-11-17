@@ -24,7 +24,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // login with username and password in req.body
-router.get("/login", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     console.log("req.body = ", req.body);
     let { username, password } = req.body;
